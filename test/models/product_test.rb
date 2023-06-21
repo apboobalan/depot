@@ -11,6 +11,12 @@ class ProductTest < ActiveSupport::TestCase
     assert product.errors[:image_url].any?
   end
 
+  test 'add custom message for empty attributes' do
+    product = Product.new
+    assert product.invalid?
+    assert_equal ['must be present'], product.errors[:description]
+  end
+
   test 'product price must be positive' do
     product = Product.new(title: 'My Book Title',
                           description: 'yyy',
