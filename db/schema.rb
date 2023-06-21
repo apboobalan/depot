@@ -21,4 +21,7 @@ ActiveRecord::Schema.define(version: 2023_06_20_181606) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+# Could not dump table "sqlite_stat1" because of following StandardError
+#   Unknown type '' for column 'tbl'
+
 end
