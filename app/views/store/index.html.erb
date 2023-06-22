@@ -4,7 +4,9 @@
 
 <h1>Your Pragmatic Catalog</h1>
 
-<h4 class="visits"><%= pluralize(@visits, 'visit') %></h4>
+<% if @visits > 5 %>
+  <h4 class="visits"><%= pluralize(@visits, 'visit') %></h4>
+<% end %>
 
 <ul class="catalog">
   <% cache @products do%>

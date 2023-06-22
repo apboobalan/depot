@@ -27,18 +27,22 @@ class LineItemsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should reset visit counter after adding a line item" do
-    get store_index_url
-    get store_index_url
-
-    assert_select '.visits', '2 visits'
+    5.times do
+      get store_index_url
+      assert_select '.visits', false
+    end
 
     assert_difference('LineItem.count') do
       post line_items_url, params: { product_id: products(:ruby).id }
     end
 
-    get store_index_url
+    5.times do
+      get store_index_url
+      assert_select '.visits', false
+    end
 
-    assert_select '.visits', '1 visit'
+    get store_index_url
+    assert_select '.visits', '6 visits'
   end
 
   test "should show line_item" do
