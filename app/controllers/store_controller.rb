@@ -1,11 +1,7 @@
 class StoreController < ApplicationController
+  include VisitCounter
   def index
     @products = Product.order(:title)
-    if session[:counter].nil?
-      session[:counter] = 1
-    else
-      session[:counter] += 1
-    end
-    @visits = session[:counter]
+    @visits = increment_and_get_visits
   end
 end
