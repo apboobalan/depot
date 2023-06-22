@@ -1,5 +1,6 @@
 class LineItemsController < ApplicationController
   include CurrentCart
+  include VisitCounter
   before_action :set_cart, only: [:create]
   before_action :set_line_item, only: %i[ show edit update destroy ]
 
@@ -23,6 +24,7 @@ class LineItemsController < ApplicationController
 
   # POST /line_items or /line_items.json
   def create
+    reset_visits
     product = Product.find(params[:product_id])
     @line_item = @cart.line_items.build(product: product)
 

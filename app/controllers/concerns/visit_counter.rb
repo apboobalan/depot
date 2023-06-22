@@ -3,6 +3,10 @@
 module VisitCounter
   private
 
+  def reset_visits
+    set_visits(0)
+  end
+
   def increment_and_get_visits
     increment_visits
     get_visits
