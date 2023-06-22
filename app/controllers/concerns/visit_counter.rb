@@ -7,16 +7,12 @@ module VisitCounter
     set_visits(0)
   end
 
-  def increment_and_get_visits
-    increment_visits
-    get_visits
-  end
-
   def increment_visits
     set_visits(get_visits + 1)
   end
 
   def set_visits(count)
+    @visits = count
     session[:visit_counter] = count
   end
 
