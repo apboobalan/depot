@@ -21,7 +21,6 @@ module VisitCounter
   end
 
   def get_visits
-    session[:visit_counter] = 0 if session[:visit_counter].nil?
-    session[:visit_counter]
+    session[:visit_counter] ||= 0
   end
 end
