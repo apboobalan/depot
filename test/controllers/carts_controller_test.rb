@@ -24,8 +24,18 @@ class CartsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should show cart" do
-    get cart_url(@cart)
+    post line_items_url, params: { product_id: products(:one).id }
+    get cart_url(id: session[:cart_id])
     assert_response :success
+  end
+
+  test "should redirect to store and show invalid cart message if we access different cart" do
+    post line_items_url, params: { product_id: products(:one).id }
+    get cart_url(@cart)
+
+    follow_redirect!
+
+    assert_select 'aside', 'Invalid cart'
   end
 
   test "should get edit" do
