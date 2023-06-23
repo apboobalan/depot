@@ -44,6 +44,17 @@ class LineItemsControllerTest < ActionDispatch::IntegrationTest
     assert_select 'td', 'Programming Ruby 1.9'
   end
 
+  test "should return appropriate quantity when adding unique and duplicate products" do
+    2.times {post line_items_url, params: { product_id: products(:ruby).id }}
+    post line_items_url, params: { product_id: products(:one).id }
+
+    cart = Cart.find(session[:cart_id])
+
+    assert cart.line_items.where(product_id: products(:ruby).id).first.quantity == 2
+    assert cart.line_items.where(product_id: products(:one).id).first.quantity == 1
+
+  end
+
   test "should reset visit counter after adding a line item" do
     5.times do
       get store_index_url

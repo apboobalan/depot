@@ -12,6 +12,12 @@ two:
   image_url: lorem.jpg
   price: 9.99
 
+three:
+  title: MyString03
+  description: MyText
+  image_url: lorem.jpg
+  price: 9.99
+
 ruby:
   title: Programming Ruby 1.9
   description:

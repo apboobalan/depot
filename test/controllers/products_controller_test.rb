@@ -9,12 +9,12 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
   test "should get index" do
     get products_url
     assert_response :success
-    assert_select 'tr td.image', 3
-    assert_select 'tr td.description', 3
-    assert_select 'tr td.actions', 3
-    assert_select 'a', {text: 'Show', count: 3}
-    assert_select 'a', {text: 'Edit', count: 3}
-    assert_select 'a', {text: 'Destroy', count: 3}
+    assert_select 'tr td.image', products.count
+    assert_select 'tr td.description', products.count
+    assert_select 'tr td.actions', products.count
+    assert_select 'a', {text: 'Show', count: products.count}
+    assert_select 'a', {text: 'Edit', count: products.count}
+    assert_select 'a', {text: 'Destroy', count: products.count}
     assert_select 'tfoot', {text: 'New Product', count: 1}
   end
 
@@ -56,7 +56,7 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
 
   test "should destroy product" do
     assert_difference('Product.count', -1) do
-      delete product_url(@product)
+      delete product_url(products(:three))
     end
 
     assert_redirected_to products_url
