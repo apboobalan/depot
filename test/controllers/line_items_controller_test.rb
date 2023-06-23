@@ -26,6 +26,24 @@ class LineItemsControllerTest < ActionDispatch::IntegrationTest
     assert_select 'td', 'Programming Ruby 1.9'
   end
 
+  test "should create line_item with price so that the product price change does not affect" do
+    product = products(:ruby)
+    assert_difference('LineItem.count') do
+      post line_items_url, params: { product_id: product.id }
+    end
+
+    follow_redirect!
+
+    old_price = product.price
+    product.price += 1
+    product.save!
+
+    assert LineItem.last.price == old_price, "line item price changed."
+
+    assert_select 'h2', 'Your Cart'
+    assert_select 'td', 'Programming Ruby 1.9'
+  end
+
   test "should reset visit counter after adding a line item" do
     5.times do
       get store_index_url
