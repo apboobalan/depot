@@ -105,4 +105,16 @@ class LineItemsControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to cart_url(Cart.find(session[:cart_id]))
   end
+
+  test "should decrement the quantity of the item if its quantity is greater than 1" do
+    2.times {post line_items_url, params: { product_id: products(:ruby).id }}
+
+    cart = Cart.find(session[:cart_id])
+
+    assert_difference('LineItem.where(cart_id: cart.id).count', 0) do
+      delete line_item_url(cart.line_items.first)
+    end
+
+    assert cart.line_items.where(product_id: products(:ruby).id).first.quantity == 1
+  end
 end

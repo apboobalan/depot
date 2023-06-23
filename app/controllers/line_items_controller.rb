@@ -55,10 +55,16 @@ class LineItemsController < ApplicationController
 
   # DELETE /line_items/1 or /line_items/1.json
   def destroy
-    @line_item.destroy
+    if @line_item.quantity > 1
+      @line_item.quantity -= 1
+      @line_item.save
+    else
+      @line_item.destroy
+    end
 
     respond_to do |format|
       format.html { redirect_to cart_url(@cart), notice: "Item was successfully removed from the cart." }
+      format.js { @current_item = @line_item }
       format.json { head :no_content }
     end
   end
