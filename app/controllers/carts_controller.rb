@@ -1,4 +1,5 @@
 class CartsController < ApplicationController
+  include CurrentCart
   before_action :set_cart, only: %i[ show edit update destroy ]
   rescue_from ActiveRecord::RecordNotFound, with: :invalid_cart
 
@@ -9,7 +10,7 @@ class CartsController < ApplicationController
 
   # GET /carts/1 or /carts/1.json
   def show
-    redirect_to store_index_url, notice: 'Invalid cart' unless params[:id] == session[:cart_id].to_s
+    redirect_to store_index_url, notice: 'Invalid cart' unless params[:id] == session_cart_id.to_s
   end
 
   # GET /carts/new

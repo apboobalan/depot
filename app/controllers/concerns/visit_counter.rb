@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 module VisitCounter
+
+  VISIT_COUNTER = :visit_counter
+
   private
 
   def reset_visits
@@ -13,10 +16,10 @@ module VisitCounter
 
   def set_visits(count)
     @visits = count
-    session[:visit_counter] = count
+    session[VISIT_COUNTER] = count
   end
 
   def get_visits
-    session[:visit_counter] ||= 0
+    session[VISIT_COUNTER] ||= 0
   end
 end
